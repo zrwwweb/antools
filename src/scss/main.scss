@@ -1,0 +1,43 @@
+// базовые подключения
+@import "vars";
+@import "mixins";
+@import "fonts";
+@import "settings";
+
+// подключения компонентов страницы
+@import "./components/header";
+@import "./components/modal";
+@import "./components/hero";
+@import "./components/popular";
+@import "./components/partners";
+@import "./components/newcomer";
+@import "./components/reviews";
+@import "./components/join";
+@import "./components/footer";
+
+.animation-class {
+   visibility: visible;
+   opacity: 1;
+   transition: .6s;
+   transform: translate(0px);   
+   &:nth-child(1) {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(0px);  
+   }
+   &:nth-child(2) {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(0px);  
+   }
+   &:nth-child(3) {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(0px);  
+   }
+   &:nth-child(4) {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(0px);  
+   }
+ }

@@ -1,0 +1,23 @@
+// если вы хотите использовать sass-переменные - удалите root
+// colors
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-bg: #1E252B;
+  --color-primary: #E8E9E9;
+  --color-accent: #FF6E30;
+  --color-accent-hover: #b33b00;
+  --color-gray: #9A9D9F;
+  --color-black-light: #283036;
+
+  --base-border-radius: 8px;
+  --offset-base: 30px;
+  --offset-secondary: 60px;
+  --offset-medium: 90px;
+  --offset-section: 200px;
+  --base-font: "PoppinsRegular", sans-serif;
+  --base-font-medium: "PoppinsMedium", sans-serif;
+  --base-font-semiBold: "PoppinsSemiBold", sans-serif;
+  --base-font-size: 16px;
+  --big-font-size: 50px;
+}

@@ -1,0 +1,77 @@
+.hero {
+   position: relative;
+   overflow: hidden;
+   @media (max-width: 1024px) {
+      height: calc(100vh - 106px);
+   }
+   &__bg {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: -1;
+      @media (max-width: 1024px) {
+         height: calc(100vh - 106px);
+      }
+   }
+
+   &__wrapper {
+      max-width: 600px;
+   }
+   &__title {
+      @media (max-width: 800px) {
+         max-width: 400px;
+      }      
+   }
+   &__descr {
+      color: var(--color-gray);
+      font-size: 18px;
+      line-height: 30px;
+      margin-bottom: var(--offset-secondary);
+      max-width: 480px;
+      @media (max-width: 800px) {
+         max-width: 400px;
+      }
+   }
+
+   &__input-box {
+      max-width: 500px;
+      width: 100%;
+      margin-bottom: 110px;
+      @media (max-width: 800px) {
+         max-width: 400px;
+      }
+   }
+
+   &__input {
+      @media (max-width: 800px) {
+         padding-left: 40px;
+      }
+   }
+
+   &__btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 12px 36px;
+   }
+
+   &__list {
+      display: flex;
+   }
+
+   &__item {
+      &:not(:last-child) {
+         margin-right: 24px;
+      }
+   }
+
+   &__icon {
+      fill: var(--color-gray);
+      transition: fill 0.3s ease-in-out;
+
+      &:hover {
+         fill: var(--color-accent);
+      }
+   }
+}
