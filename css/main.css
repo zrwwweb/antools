@@ -51,6 +51,7 @@
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 *,
@@ -64,6 +65,8 @@ body {
   font-family: var(--base-font);
   font-size: var(--base-font-size);
   background-color: var(--color-bg);
+  overflow-x: hidden;
+  height: 100%;
 }
 
 img {
@@ -88,6 +91,7 @@ li {
 }
 
 .stop-scroll {
+  height: 100%;
   overflow: hidden;
 }
 
@@ -106,13 +110,51 @@ li {
 
 .btn {
   font-family: var(--base-font-semiBold);
-  color: var(--color-white);
+  color: var(--color-accent);
   border-radius: var(--base-border-radius);
   background-color: var(--color-accent);
-  transition: background-color 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+  position: relative;
+}
+.btn::before {
+  content: "Join Us";
+  color: var(--color-white);
+  position: absolute;
+  left: 24px;
+  top: 12px;
+  transition: 0.3s;
+}
+.btn::after {
+  content: "Join Us";
+  color: var(--color-white);
+  position: absolute;
+  left: 24px;
+  top: 12px;
+  opacity: 0;
+  transition: 0.3s;
+  transform: translateX(-30px);
 }
 .btn:hover {
   background-color: var(--color-accent-hover);
+  color: var(--color-accent-hover);
+}
+.btn:hover::before {
+  content: "Join Us";
+  color: var(--color-white);
+  position: absolute;
+  left: 24px;
+  top: 12px;
+  opacity: 0;
+  transform: translateX(30px);
+}
+.btn:hover::after {
+  content: "Join Us";
+  color: var(--color-white);
+  position: absolute;
+  left: 24px;
+  top: 12px;
+  opacity: 1;
+  transform: translateX(0px);
 }
 
 .btn-secondary {
@@ -291,6 +333,9 @@ li {
   position: relative;
   cursor: pointer;
 }
+.card__btn-fav_active svg {
+  fill: var(--color-accent) !important;
+}
 @media (max-width: 991px) {
   .card {
     box-shadow: 0px 0px 10px 1px rgba(40, 48, 54, 0.6);
@@ -439,7 +484,7 @@ li {
     transform: translateX(440px);
     position: fixed;
     right: 48px;
-    bottom: 40px;
+    top: 300px;
   }
 }
 .header__buttons_visible {
@@ -686,6 +731,12 @@ li {
   margin-bottom: 28px;
   display: block;
 }
+.modal__label > .just-validate-error-label {
+  margin-top: 5px;
+}
+.modal__label > .just-validate-error-field {
+  border: 2px solid #b81111;
+}
 .modal__input {
   width: 100%;
   border: 2px solid var(--color-accent);
@@ -766,6 +817,17 @@ li {
   top: 50%;
   transform: translateY(-50%);
   padding: 12px 36px;
+  padding: 12px 20px;
+  background-color: var(--color-accent);
+  border-radius: 10px;
+  color: var(--color-white);
+  font-weight: 700;
+  letter-spacing: 1px;
+  box-shadow: 0px 0px 10px 1px transparent;
+  transition: 0.3s;
+}
+.hero__btn:hover {
+  box-shadow: 0px 0px 10px 1px var(--color-accent);
 }
 .hero__list {
   display: flex;
@@ -773,14 +835,64 @@ li {
 .hero__item:not(:last-child) {
   margin-right: 24px;
 }
+.hero__item:nth-child(1) svg {
+  -webkit-animation: light 4s infinite;
+  animation: light 4s infinite;
+  -webkit-animation-delay: 3s;
+  animation-delay: 3s;
+}
+.hero__item:nth-child(2) svg {
+  -webkit-animation: light 4s infinite;
+  animation: light 4s infinite;
+  -webkit-animation-delay: 4s;
+  animation-delay: 4s;
+}
+.hero__item:nth-child(3) svg {
+  -webkit-animation: light 4s infinite;
+  animation: light 4s infinite;
+  -webkit-animation-delay: 5s;
+  animation-delay: 5s;
+}
 .hero__icon {
   fill: var(--color-gray);
   transition: fill 0.3s ease-in-out;
 }
-.hero__icon:hover {
-  fill: var(--color-accent);
+
+@-webkit-keyframes light {
+  0% {
+    fill: var(--color-gray);
+  }
+  25% {
+    fill: var(--color-gray);
+  }
+  50% {
+    fill: var(--color-accent);
+  }
+  75% {
+    fill: var(--color-accent);
+  }
+  100% {
+    fill: var(--color-gray);
+  }
 }
 
+@keyframes light {
+  0% {
+    fill: var(--color-gray);
+  }
+  25% {
+    fill: var(--color-gray);
+  }
+  50% {
+    fill: var(--color-accent);
+  }
+  75% {
+    fill: var(--color-accent);
+  }
+  100% {
+    fill: var(--color-gray);
+  }
+}
 .popular {
   margin-bottom: 80px;
 }
@@ -819,19 +931,14 @@ li {
 }
 .popular__card {
   flex: 0 0 32%;
-  padding: 34px;
-  margin-bottom: 100px;
-  display: none;
-}
-@media (max-width: 1024px) {
-  .popular__card {
-    margin-bottom: 40px;
-  }
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  margin-bottom: 0;
 }
 @media (max-width: 991px) {
   .popular__card {
     flex: 0 0 48%;
-    margin-bottom: 40px;
   }
 }
 @media (max-width: 700px) {
@@ -842,26 +949,33 @@ li {
 @media (max-width: 600px) {
   .popular__card {
     flex: 0 0 100%;
-    margin-bottom: 20px;
   }
 }
-.popular__card:nth-child(1) {
+.popular__card:nth-child(1), .popular__card:nth-child(2), .popular__card:nth-child(3) {
   display: inline-block;
   transform: translateX(-50px);
   opacity: 0;
   visibility: hidden;
+  height: auto;
+  padding: 34px;
+  margin-bottom: 100px;
 }
-.popular__card:nth-child(2) {
-  display: inline-block;
-  transform: translateY(-50px);
-  opacity: 0;
-  visibility: hidden;
+@media (max-width: 991px) {
+  .popular__card:nth-child(1), .popular__card:nth-child(2), .popular__card:nth-child(3) {
+    margin-bottom: 20px;
+  }
 }
-.popular__card:nth-child(3) {
-  display: inline-block;
-  transform: translateX(50px);
-  opacity: 0;
-  visibility: hidden;
+.popular__card_visible {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+  padding: 34px;
+  margin-bottom: 100px;
+}
+@media (max-width: 991px) {
+  .popular__card_visible {
+    margin-bottom: 20px;
+  }
 }
 
 .partners {
@@ -965,6 +1079,7 @@ li {
   .newcomer__left {
     max-width: 60%;
     margin-bottom: 40px;
+    margin-right: 0;
   }
 }
 @media (max-width: 750px) {
@@ -996,7 +1111,17 @@ li {
   }
 }
 .newcomer__btn {
-  padding: 16px 40px;
+  padding: 12px 16px;
+  font-size: 20px;
+}
+.newcomer__btn::before {
+  left: 40px;
+}
+.newcomer__btn::after {
+  left: 40px;
+}
+.newcomer__btn:hover::after {
+  left: 40px;
 }
 .newcomer__items {
   display: flex;
@@ -1027,6 +1152,11 @@ li {
   margin-bottom: 50px;
   margin-right: 24px;
   padding: 12px 20px;
+}
+@media (max-width: 991px) {
+  .newcomer__card {
+    margin-right: 0;
+  }
 }
 @media (max-width: 700px) {
   .newcomer__card {
@@ -1241,6 +1371,15 @@ li {
   right: 10px;
   top: 8px;
   padding: 12px 36px;
+  color: var(--color-white);
+  border-radius: 10px;
+  font-weight: 700;
+  background-color: var(--color-accent);
+  box-shadow: 0px 0px 10px 1px transparent;
+  transition: 0.3s;
+}
+.join__btn:hover {
+  box-shadow: 0px 0px 10px 1px var(--color-accent);
 }
 
 .footer {

@@ -15,7 +15,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 document.addEventListener('DOMContentLoaded', function () {
-  var _document, _document2, _document3, _document4;
+  var _document, _document2, _document3;
 
   var swiper = new Swiper('.reviews__slider', {
     direction: 'horizontal',
@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     slidesPerView: 1
   });
+  var favBtns = document.querySelectorAll('.card__btn-fav');
+  favBtns.forEach(function (el) {
+    el.addEventListener('click', function () {
+      el.classList.toggle('card__btn-fav_active');
+    });
+  });
   var loadMoreBtn = document.querySelector('#load-more');
   var currentItem = 3;
 
@@ -36,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var cards = _toConsumableArray(document.querySelectorAll('.popular__items .popular__card'));
 
     for (var i = currentItem; i < currentItem + 3; i++) {
-      cards[i].style.display = 'inline-block';
+      cards[i].classList.add('popular__card_visible');
     }
 
     currentItem += 3;
@@ -50,9 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var nav = (_document2 = document) === null || _document2 === void 0 ? void 0 : _document2.querySelector('.nav');
   var navLinks = nav === null || nav === void 0 ? void 0 : nav.querySelectorAll('.header__link');
   var body = document.body;
-  var header = (_document3 = document) === null || _document3 === void 0 ? void 0 : _document3.querySelector('.header');
-  var headerButtons = (_document4 = document) === null || _document4 === void 0 ? void 0 : _document4.querySelector('.header__buttons');
+  var headerButtons = (_document3 = document) === null || _document3 === void 0 ? void 0 : _document3.querySelector('.header__buttons');
   burger === null || burger === void 0 ? void 0 : burger.addEventListener('click', function () {
+    document.documentElement.classList.toggle('stop-scroll');
     body.classList.toggle('stop-scroll');
     burger === null || burger === void 0 ? void 0 : burger.classList.toggle('burger_active');
     nav === null || nav === void 0 ? void 0 : nav.classList.toggle('header__nav_visible');
@@ -60,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   navLinks.forEach(function (el) {
     el.addEventListener('click', function () {
+      document.documentElement.classList.remove('stop-scroll');
       body.classList.remove('stop-scroll');
       burger === null || burger === void 0 ? void 0 : burger.classList.remove('burger_active');
       nav === null || nav === void 0 ? void 0 : nav.classList.remove('header__nav_visible');
@@ -70,15 +77,22 @@ document.addEventListener('DOMContentLoaded', function () {
   var modal = document.querySelector('.modal');
   var btns = document.querySelectorAll('.btn');
   closeModal.addEventListener('click', function () {
-    modal.classList.remove('modal_visible');
+    if (burger !== null && burger !== void 0 && burger.classList.contains('burger_active')) {
+      modal.classList.remove('modal_visible');
+    } else {
+      modal.classList.remove('modal_visible');
+      body.classList.remove('stop-scroll');
+      document.documentElement.classList.remove('stop-scroll');
+    }
   });
   btns.forEach(function (el) {
     el.addEventListener('click', function () {
       modal.classList.add('modal_visible');
+      body.classList.add('stop-scroll');
+      document.documentElement.classList.add('stop-scroll');
     });
-  }); // inputmask
+  }); // inputmask	
 
-  var form = document.querySelectorAll('.form');
   var telSelector = document.querySelector('.modal__input-tel');
   var inputMask = new Inputmask('+7 (999) 999-99-99');
   inputMask.mask(telSelector);
@@ -86,33 +100,33 @@ document.addEventListener('DOMContentLoaded', function () {
   validation.addField('.modal__input-name', [{
     rule: 'minLength',
     value: 3,
-    errorMessage: 'Имя должно состоять минимум из 3 символов'
+    errorMessage: 'Name must contain minimum 3 characters*'
   }, {
     rule: 'maxLength',
     value: 30
   }, {
     rule: 'required',
     value: true,
-    errorMessage: 'Введите имя!'
+    errorMessage: 'Enter your name!*'
   }]).addField('.modal__input-email', [{
     rule: 'required',
     value: true,
-    errorMessage: 'Email обязателен'
+    errorMessage: 'Email ios required*'
   }, {
     rule: 'email',
     value: true,
-    errorMessage: 'Введите корректный Email'
+    errorMessage: 'Enter valid Email*'
   }]).addField('.modal__input-tel', [{
     rule: 'required',
     value: true,
-    errorMessage: 'Телефон обязателен'
+    errorMessage: 'Phone number is required*'
   }, {
     rule: 'function',
     validator: function validator() {
       var phone = telSelector.inputmask.unmaskedvalue();
       return phone.length === 10;
     },
-    errorMessage: 'Введите корректный телефон'
+    errorMessage: 'Enter valid phone number*'
   }]).onSuccess(function (event) {
     var _console;
 
@@ -126,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          console.log('Отправлено');
+          console.log('Submit');
         }
       }
     };
